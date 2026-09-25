@@ -5,6 +5,7 @@ import ExpenseAdd from "../components/ExpenseAdd";
 import useExpenses from "../hooks/useExpenses";
 import ExpenseReset from "../components/ExpenseReset";
 import ExpenseSorter from "../components/ExpenseSorter";
+import "./Home.css"
 
 function Home() {
   const { expenses, addExpense, resetExpenses } = useExpenses();
@@ -16,7 +17,7 @@ function Home() {
 
   const sortedExpenses = [...expenses].sort(sortingAlgo);
 
-  return <div>
+  return <div className="home">
     <h1>Manage your expenses</h1>
     <ExpenseAdd addExpense={addExpense} />
     <ExpenseReset resetExpenses={resetExpenses}/>

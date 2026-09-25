@@ -1,0 +1,559 @@
+/* ================================
+   EXPENSE MANAGER — INSANE MODE
+   ================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --bg: #070711;
+  --bg-secondary: #0d0d1c;
+  --card: rgba(20, 20, 38, 0.72);
+
+  --text: #f8f8ff;
+  --muted: #9494ad;
+
+  --primary: #8b5cf6;
+  --primary-light: #a78bfa;
+  --cyan: #22d3ee;
+  --pink: #ec4899;
+  --green: #34d399;
+  --red: #fb7185;
+
+  --border: rgba(255, 255, 255, 0.09);
+  --shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
+
+  --radius: 22px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  color: var(--text);
+
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(139, 92, 246, 0.20),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(34, 211, 238, 0.13),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(236, 72, 153, 0.10),
+      transparent 35%
+    ),
+    var(--bg);
+
+  background-attachment: fixed;
+}
+
+
+/* ================================
+   MAIN CONTAINER
+   ================================ */
+
+#root {
+  min-height: 100vh;
+}
+
+#root > div {
+  width: min(1100px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 80px 0 100px;
+}
+
+
+/* ================================
+   TITLE
+   ================================ */
+
+h1 {
+  position: relative;
+
+  margin: 0 0 50px;
+
+  font-size: clamp(42px, 7vw, 76px);
+  line-height: 0.95;
+  font-weight: 800;
+  letter-spacing: -4px;
+
+  background: linear-gradient(
+    120deg,
+    #ffffff 10%,
+    #c4b5fd 45%,
+    #67e8f9 80%,
+    #f9a8d4
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation: titleFloat 6s ease-in-out infinite;
+}
+
+h1::after {
+  content: "";
+
+  position: absolute;
+  left: 5px;
+  bottom: -18px;
+
+  width: 120px;
+  height: 4px;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--cyan),
+    transparent
+  );
+
+  box-shadow:
+    0 0 15px var(--primary),
+    0 0 35px rgba(34, 211, 238, 0.5);
+}
+
+
+/* ================================
+   SECTIONS
+   ================================ */
+
+h2 {
+  margin: 65px 0 25px;
+
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+h2::before {
+  content: "";
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: var(--cyan);
+
+  box-shadow:
+    0 0 10px var(--cyan),
+    0 0 25px var(--cyan);
+}
+
+
+/* ================================
+   COMPONENT CARDS
+   ================================ */
+
+#root > div > *:not(h1):not(h2):not(ul) {
+  position: relative;
+
+  padding: 24px;
+
+  margin-bottom: 20px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow: var(--shadow);
+
+  overflow: hidden;
+}
+
+#root > div > *:not(h1):not(h2):not(ul)::before {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -100px;
+  right: -80px;
+
+  border-radius: 50%;
+
+  background: var(--primary);
+
+  opacity: 0.08;
+
+  filter: blur(40px);
+
+  pointer-events: none;
+}
+
+
+/* ================================
+   INPUTS
+   ================================ */
+
+input,
+select,
+textarea {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+
+  outline: none;
+
+  color: white;
+  background: rgba(5, 5, 15, 0.65);
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+input::placeholder {
+  color: #66667c;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-light);
+
+  box-shadow:
+    0 0 0 3px rgba(139, 92, 246, 0.15),
+    0 0 25px rgba(139, 92, 246, 0.18);
+
+  transform: translateY(-1px);
+}
+
+select {
+  cursor: pointer;
+}
+
+
+/* ================================
+   BUTTONS
+   ================================ */
+
+button {
+  position: relative;
+
+  padding: 13px 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(139, 92, 246, 0.9),
+      rgba(99, 102, 241, 0.8)
+    );
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 8px 25px rgba(139, 92, 246, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+button::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 70%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  transition: left 0.5s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+
+  filter: brightness(1.12);
+
+  box-shadow:
+    0 12px 35px rgba(139, 92, 246, 0.4),
+    0 0 25px rgba(139, 92, 246, 0.15);
+}
+
+button:hover::before {
+  left: 130%;
+}
+
+button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+
+/* ================================
+   EXPENSE LIST
+   ================================ */
+
+ul {
+  list-style: none;
+
+  padding: 0;
+  margin: 0;
+
+  display: grid;
+
+  gap: 14px;
+}
+
+li {
+  position: relative;
+
+  padding: 20px 24px;
+
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.02)
+    );
+
+  backdrop-filter: blur(15px);
+
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  animation: itemAppear 0.5s ease both;
+}
+
+li::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 15%;
+
+  width: 3px;
+  height: 70%;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    to bottom,
+    var(--primary),
+    var(--cyan)
+  );
+
+  box-shadow: 0 0 12px var(--primary);
+
+  opacity: 0;
+
+  transition: opacity 0.3s ease;
+}
+
+li:hover {
+  transform: translateX(8px) translateY(-3px);
+
+  border-color: rgba(167, 139, 250, 0.35);
+
+  box-shadow:
+    0 20px 55px rgba(0, 0, 0, 0.35),
+    0 0 30px rgba(139, 92, 246, 0.08);
+}
+
+li:hover::before {
+  opacity: 1;
+}
+
+
+/* ================================
+   EXPENSE TEXT
+   ================================ */
+
+li strong,
+li b {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+li span {
+  color: var(--muted);
+}
+
+
+/* ================================
+   DELETE / RESET BUTTON
+   ================================ */
+
+button[type="reset"],
+button.delete,
+.delete-button {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(244, 63, 94, 0.85),
+      rgba(190, 24, 93, 0.85)
+    );
+
+  box-shadow:
+    0 8px 25px rgba(244, 63, 94, 0.2);
+}
+
+button[type="reset"]:hover,
+button.delete:hover,
+.delete-button:hover {
+  box-shadow:
+    0 12px 35px rgba(244, 63, 94, 0.35);
+}
+
+
+/* ================================
+   SCROLLBAR
+   ================================ */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070711;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      var(--primary),
+      var(--cyan)
+    );
+
+  border: 2px solid #070711;
+}
+
+
+/* ================================
+   SELECTION
+   ================================ */
+
+::selection {
+  color: white;
+  background: rgba(139, 92, 246, 0.55);
+}
+
+
+/* ================================
+   ANIMATIONS
+   ================================ */
+
+@keyframes titleFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes itemAppear {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+
+@media (max-width: 700px) {
+  #root > div {
+    width: min(100% - 24px, 600px);
+    padding-top: 45px;
+  }
+
+  h1 {
+    font-size: 48px;
+    letter-spacing: -3px;
+    margin-bottom: 40px;
+  }
+
+  h2 {
+    margin-top: 45px;
+  }
+
+  #root > div > *:not(h1):not(h2):not(ul) {
+    padding: 18px;
+  }
+
+  li {
+    padding: 17px;
+  }
+}
