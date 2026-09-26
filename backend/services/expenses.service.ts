@@ -6,7 +6,7 @@ export class ExpensesService {
 
   private static dataPath = "./data/expenses.json";
   private static resetPath = "./data/expenses.init.json";
-  
+
   public static async getExpenses(): Promise<Expense[]> {
     const expenses: Expense[] = [];
 
@@ -18,47 +18,18 @@ export class ExpensesService {
   }
   
   public static async addExpense(newExpense: NewExpense): Promise<Expense[]> {
-    const expenses = await this.getExpenses();
-    const expense: Expense = {
-      ...newExpense,
-      id: expenses.length + 1
-    };
-    db.orm.public.Expense.create(expense);
+    await db.orm.public.Expense.create(newExpense);
     return await this.getExpenses();
   }
-  
-  public static resetExpenses(): Expense[] {
-    this._resetExpenses();
-    return this.readExpenses();
-  }
-  
-  private static readExpenses(): Expense[] {
-    try {
-      const data = JSON.parse(fs.readFileSync(this.dataPath, "utf-8"));
-      return data;
-    } catch (error) {
-      console.error("Error reading expenses file:", error);
-      throw error;
-    }
-  }
-  
-  private static saveExpenses(expenses: Expense[]): void {
-    try {
-      fs.writeFileSync(this.dataPath, JSON.stringify(expenses, null, 2));
-    } catch (error) {
-      console.error("Error saving expenses file:", error);
-      throw error;
-    }
-  }
 
-  private static _resetExpenses(): void {
+  public static resetExpenses(): Expense[] {
     try {
       const defaultExpenses: Expense[] = JSON.parse(fs.readFileSync(this.resetPath, "utf-8"));
       fs.writeFileSync(this.dataPath, JSON.stringify(defaultExpenses, null, 2));
+      return defaultExpenses;
     } catch (error) {
       console.error("Error resetting expenses file:", error);
       throw error;
     }
   }
-  
 }

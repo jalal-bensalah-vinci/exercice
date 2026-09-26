@@ -1,12 +1,11 @@
-import type { Expense } from "../types/Expense";
+import type { NewExpense } from "../types/Expense";
 
 interface ExpenseAddProps {
-  addExpense: (expense: Expense) => void;
+  addExpense: (expense: NewExpense) => void;
 }
 
-function generateRandomExpense(): Expense {
+function generateRandomExpense(): NewExpense {
   return {
-    id: Math.round(Math.random()*100).toString(),
     date: "2026-09-18",
     description: "New random Expense",
     payer: "New random Payer",
